@@ -52,7 +52,7 @@ Opening `index.html` with `file://` is unsupported: modules and `fetch` need HTT
 
 ## Recording results
 
-Record each result in the verification table in `StarterKit/README.md` as **pass / fail / not run** with the date, browser and evidence. Do not mark a result pass from a screenshot, a ticked task or an agent's say-so alone.
+Record each result in the verification table in `README.md` at the repository root as **pass / fail / not run** with the date, browser and evidence. Do not mark a result pass from a screenshot, a ticked task or an agent's say-so alone.
 
 ## Known blockers
 
