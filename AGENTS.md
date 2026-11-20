@@ -29,8 +29,8 @@ Grading rules to keep: equality counts on reach, deadline, lead time and density
 
 Preview from the repository root: `python3 -m http.server 8000 --bind 127.0.0.1`, then open http://127.0.0.1:8000.
 Run the browser test runner at http://127.0.0.1:8000/tests/ with the same server. Zero discovered tests is a failure.
-Cover AC1–AC13 in the verification table in `StarterKit/README.md` (pass / fail / not run, date, environment, evidence).
-Check the verification table in `StarterKit/README.md` first; a plan or scaffolding is not a completed game.
+Cover AC1–AC13 in the verification table in `README.md` at the repository root (pass / fail / not run, date, environment, evidence).
+Check the verification table in `README.md` first; a plan or scaffolding is not a completed game.
 
 ## Code Style
 

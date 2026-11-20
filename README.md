@@ -35,7 +35,7 @@ The map is real terrain: elevation and rivers of southern Spain, rendered in Ble
 
 ## Play locally
 
-Download this repository or clone it using the URL from GitHub's **Code** button, then open a terminal in the **repository root**: the folder that contains `index.html`, `main.js` and `data/` (this README lives two folders below it, in `StarterKit/`).
+Download this repository or clone it using the URL from GitHub's **Code** button, then open a terminal in the **repository root**: the folder that contains this README, `index.html`, `main.js` and `data/`.
 
 ```sh
 python3 -m http.server 8000 --bind 127.0.0.1
