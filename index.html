@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:," />
+    <title>Signal Age</title>
+    <meta name="description" content="Build the communications of a growing civilization on real terrain, from smoke signals to near-gigabit wireless." />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preload" as="image" href="assets/maps/l1-r1.webp" />
+    <script type="module" src="main.js"></script>
+  </head>
+  <body data-era="1">
+    <a class="skip-link" href="#app">Skip to the game</a>
+    <header class="hud" id="hud" aria-label="Game status">
+      <p class="brand">Signal Age</p>
+    </header>
+    <main id="app" tabindex="-1">
+      <p class="loading">Loading the civilization…</p>
+      <noscript><p>Signal Age needs JavaScript. Serve the folder with <code>python3 -m http.server 8000 --bind 127.0.0.1</code> and open http://127.0.0.1:8000.</p></noscript>
+    </main>
+    <div id="announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+    <dialog id="restart-dialog" aria-labelledby="restart-title" aria-describedby="restart-desc">
+      <h2 id="restart-title">Restart the game?</h2>
+      <p id="restart-desc">This clears every build, completed demand, attempt and use of help, and returns to the first briefing.</p>
+      <div class="actions">
+        <button type="button" id="restart-confirm" data-testid="restart-confirm">Restart</button>
+        <button type="button" id="restart-cancel" class="secondary" data-testid="restart-cancel">Cancel</button>
+      </div>
+    </dialog>
+    <dialog id="ledger-dialog" class="ledger" aria-labelledby="ledger-title">
+      <div class="ledger-head">
+        <h2 id="ledger-title">Technology ledger</h2>
+        <button type="button" id="ledger-close" class="secondary" data-testid="ledger-close">Close</button>
+      </div>
+      <div id="ledger-body"></div>
+    </dialog>
+  </body>
+</html>

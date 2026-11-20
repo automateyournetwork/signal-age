@@ -1,0 +1,146 @@
+{
+  "notes": "Real terrain for Signal Age's fictional world. Settlement names are fictional; their positions are real places in southern Spain chosen so the map distances match the game's request distances. Elevation: AWS Terrain Tiles (Terrarium encoding). Rivers: Natural Earth 10m river centerlines.",
+  "aspect": [
+    10,
+    7
+  ],
+  "settlements": {
+    "ashford": {
+      "lat": 37.8847,
+      "lon": -4.7792,
+      "real": "Cordoba, a crossing of the Guadalquivir"
+    },
+    "hill-fort": {
+      "lat": 37.8117,
+      "lon": -5.0217,
+      "real": "Almodovar del Rio castle hill"
+    },
+    "brennans-ford": {
+      "lat": 36.78,
+      "lon": -6.36,
+      "real": "Guadalquivir mouth near Sanlucar de Barrameda"
+    },
+    "kingsport": {
+      "lat": 36.7213,
+      "lon": -4.4214,
+      "real": "Malaga"
+    },
+    "port-merrow": {
+      "lat": 37.6057,
+      "lon": -0.9862,
+      "real": "Cartagena"
+    },
+    "merrow-harbour": {
+      "lat": 37.585,
+      "lon": -0.862,
+      "real": "Portman bay"
+    },
+    "great-steppe": {
+      "lat": 39.2,
+      "lon": -2.6,
+      "real": "La Mancha plateau"
+    }
+  },
+  "dem": {
+    "regional": {
+      "zoom": 9,
+      "bbox": [
+        -7.4,
+        35.1,
+        1.0,
+        41.0
+      ]
+    },
+    "cordoba": {
+      "zoom": 11,
+      "bbox": [
+        -5.5,
+        37.4,
+        -4.3,
+        38.35
+      ]
+    },
+    "cartagena": {
+      "zoom": 12,
+      "bbox": [
+        -1.25,
+        37.4,
+        -0.6,
+        37.85
+      ]
+    }
+  },
+  "views": {
+    "l1-r1": {
+      "dem": "cordoba",
+      "center": [
+        37.848,
+        -4.9
+      ],
+      "widthKm": 64,
+      "exaggeration": 3.4
+    },
+    "l1-r2": {
+      "dem": "regional",
+      "center": [
+        37.33,
+        -5.57
+      ],
+      "widthKm": 250,
+      "exaggeration": 6.5
+    },
+    "l2-r1": {
+      "dem": "regional",
+      "center": [
+        37.3,
+        -5.39
+      ],
+      "widthKm": 270,
+      "exaggeration": 6.5
+    },
+    "l2-r2": {
+      "dem": "regional",
+      "center": [
+        37.3,
+        -2.88
+      ],
+      "widthKm": 424,
+      "exaggeration": 7.0
+    },
+    "l3-r1": {
+      "dem": "regional",
+      "center": [
+        39.05,
+        -3.035
+      ],
+      "widthKm": 427,
+      "exaggeration": 7.0,
+      "area": {
+        "settlement": "great-steppe",
+        "areaKm2": 40000
+      }
+    },
+    "l3-r2": {
+      "dem": "cartagena",
+      "center": [
+        37.595,
+        -0.924
+      ],
+      "widthKm": 34,
+      "exaggeration": 2.8,
+      "area": {
+        "settlement": "port-merrow",
+        "areaKm2": 50
+      }
+    },
+    "epilogue": {
+      "dem": "regional",
+      "center": [
+        38.4,
+        -1.73
+      ],
+      "widthKm": 400,
+      "exaggeration": 7.0
+    }
+  }
+}

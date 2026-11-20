@@ -1,0 +1,1528 @@
+{
+  "schemaVersion": 1,
+  "notes": "All values come from StarterKit/SPEC.md. Money is integer ten-thousandths of a cost unit (cost 3 = 30000). A value is a game-model value unless its medium lists a source for that field in fieldSources.",
+  "sources": [
+    {
+      "id": "src-hist-courier",
+      "title": "Historical anchor for relay courier speeds (to be located)",
+      "url": null,
+      "section": null,
+      "claim": "Foot couriers and mounted relay posts covered roughly tens and a few hundred km per day respectively.",
+      "required": true
+    },
+    {
+      "id": "src-hist-optical-telegraph",
+      "title": "Historical anchor for the optical (semaphore) telegraph (to be located)",
+      "url": null,
+      "section": null,
+      "claim": "Chains of semaphore towers passed coded messages between hilltop stations in the late 18th and 19th centuries.",
+      "required": true
+    },
+    {
+      "id": "src-hist-electric-telegraph",
+      "title": "Historical anchor for the electric telegraph (to be located)",
+      "url": null,
+      "section": null,
+      "claim": "Electric telegraph lines carried coded text over wires effectively instantly from the mid-19th century.",
+      "required": true
+    },
+    {
+      "id": "src-hist-telephone",
+      "title": "Historical anchor for the telephone (to be located)",
+      "url": null,
+      "section": null,
+      "claim": "Telephone lines carried live voice over copper wire from the late 19th century.",
+      "required": true
+    },
+    {
+      "id": "src-ds0",
+      "title": "Standard: the 64 kbps digital voice channel (to be located)",
+      "url": null,
+      "section": null,
+      "claim": "One digital voice channel (DS0) carries 64 kbps.",
+      "required": true
+    },
+    {
+      "id": "src-ds1",
+      "title": "Standard: T1 / DS1 line rate (to be located)",
+      "url": null,
+      "section": null,
+      "claim": "A T1 (DS1) carries 1.544 Mbps: 24 channels of 64 kbps plus framing.",
+      "required": true
+    },
+    {
+      "id": "src-ds3",
+      "title": "Standard: T3 / DS3 line rate (to be located)",
+      "url": null,
+      "section": null,
+      "claim": "A T3 (DS3) carries 44.736 Mbps, equivalent to 28 T1s or 672 voice channels.",
+      "required": true
+    },
+    {
+      "id": "src-sonet",
+      "title": "Standard: SONET OC-3, OC-12 and OC-48 line rates (to be located)",
+      "url": null,
+      "section": null,
+      "claim": "SONET OC-3, OC-12 and OC-48 run at 155.52 Mbps, 622.08 Mbps and 2,488.32 Mbps.",
+      "required": true
+    },
+    {
+      "id": "src-fiber-speed",
+      "title": "Physical limit: signal speed in optical fiber (to be located)",
+      "url": null,
+      "section": null,
+      "claim": "Light in optical fiber (refractive index about 1.46) travels at roughly two-thirds of c, about 200,000 km/s.",
+      "required": true
+    },
+    {
+      "id": "src-geo-altitude",
+      "title": "Physical limit: geostationary orbit altitude (to be located)",
+      "url": null,
+      "section": null,
+      "claim": "Geostationary satellites orbit about 35,786 km above the equator, so the up-and-down path is about 71,572 km.",
+      "required": true
+    },
+    {
+      "id": "src-speed-of-light",
+      "title": "Physical constant: the speed of light in vacuum (to be located)",
+      "url": null,
+      "section": null,
+      "claim": "Light travels at 299,792.458 km/s in vacuum.",
+      "required": true
+    }
+  ],
+  "plants": [
+    {
+      "id": "copper-plant",
+      "name": "Copper plant",
+      "what": "Twisted-pair or telegraph wire between the places",
+      "requires": null,
+      "months": 36,
+      "cost": {
+        "fixed": 150000
+      },
+      "source": "game-model"
+    },
+    {
+      "id": "ducts",
+      "name": "Ducts and rights-of-way",
+      "what": "Conduit, poles and permits",
+      "requires": null,
+      "months": 30,
+      "cost": {
+        "fixed": 100000,
+        "perRouteKm": 15000
+      },
+      "source": "game-model"
+    },
+    {
+      "id": "fiber-cable",
+      "name": "Fiber cable",
+      "what": "Fiber pulled through ducts",
+      "requires": "ducts",
+      "months": 18,
+      "cost": {
+        "fixed": 150000,
+        "perRouteKm": 35000
+      },
+      "source": "game-model"
+    },
+    {
+      "id": "semaphore-towers",
+      "name": "Semaphore towers",
+      "what": "Hilltop optical telegraph stations",
+      "requires": null,
+      "months": 24,
+      "cost": {
+        "fixed": 100000
+      },
+      "source": "game-model"
+    },
+    {
+      "id": "tower-sites",
+      "name": "Tower sites",
+      "what": "A site with tower, power and backhaul",
+      "requires": null,
+      "months": 18,
+      "cost": {
+        "perTower": 80000
+      },
+      "source": "game-model"
+    }
+  ],
+  "media": [
+    {
+      "id": "spoken-word",
+      "name": "Spoken word / shout",
+      "era": 1,
+      "class": "live-voice",
+      "summary": "A voice carries live speech, but only as far as someone can hear it.",
+      "reach": {
+        "kind": "km",
+        "value": 0.1
+      },
+      "speed": {
+        "kind": "instant"
+      },
+      "plant": null,
+      "technology": {
+        "months": 0,
+        "cost": 10000
+      },
+      "capacity": {
+        "kind": "bps",
+        "value": 40
+      },
+      "circuits": 1,
+      "source": "game-model",
+      "fieldSources": {}
+    },
+    {
+      "id": "signal-drum",
+      "name": "Signal drum",
+      "era": 1,
+      "class": "alert",
+      "summary": "A few coded beats warn everyone within earshot.",
+      "reach": {
+        "kind": "km",
+        "value": 5
+      },
+      "speed": {
+        "kind": "instant"
+      },
+      "plant": null,
+      "technology": {
+        "months": 1,
+        "cost": 20000
+      },
+      "capacity": {
+        "kind": "bps",
+        "value": 1
+      },
+      "circuits": 1,
+      "source": "game-model",
+      "fieldSources": {}
+    },
+    {
+      "id": "smoke-beacon",
+      "name": "Smoke beacon",
+      "era": 1,
+      "class": "alert",
+      "summary": "A hilltop fire is seen at once from far away, but it can only say that something is wrong.",
+      "reach": {
+        "kind": "km",
+        "value": 30
+      },
+      "speed": {
+        "kind": "instant"
+      },
+      "plant": null,
+      "technology": {
+        "months": 1,
+        "cost": 30000
+      },
+      "capacity": {
+        "kind": "bps",
+        "value": 0.05
+      },
+      "circuits": 1,
+      "source": "game-model",
+      "fieldSources": {}
+    },
+    {
+      "id": "foot-courier",
+      "name": "Foot courier",
+      "era": 1,
+      "class": "text",
+      "summary": "A runner carries a written message as far as needed, at walking pace.",
+      "reach": {
+        "kind": "unlimited"
+      },
+      "speed": {
+        "kind": "km_per_unit",
+        "value": 40,
+        "unit": "day"
+      },
+      "plant": null,
+      "technology": {
+        "months": 1,
+        "cost": 40000
+      },
+      "capacity": {
+        "kind": "payload",
+        "bits": 240000
+      },
+      "circuits": 1,
+      "source": "game-model",
+      "fieldSources": {
+        "speed": "src-hist-courier"
+      }
+    },
+    {
+      "id": "horse-relay",
+      "name": "Horse relay",
+      "era": 1,
+      "class": "text",
+      "summary": "Riders change horses at posts to carry written messages quickly over any distance.",
+      "reach": {
+        "kind": "unlimited"
+      },
+      "speed": {
+        "kind": "km_per_unit",
+        "value": 200,
+        "unit": "day"
+      },
+      "plant": null,
+      "technology": {
+        "months": 6,
+        "cost": 80000
+      },
+      "capacity": {
+        "kind": "payload",
+        "bits": 1000000
+      },
+      "circuits": 1,
+      "source": "game-model",
+      "fieldSources": {
+        "speed": "src-hist-courier"
+      }
+    },
+    {
+      "id": "optical-telegraph",
+      "name": "Optical telegraph (semaphore)",
+      "era": 2,
+      "class": "text",
+      "summary": "Signal arms on hilltop towers pass coded text from station to station.",
+      "reach": {
+        "kind": "km",
+        "value": 200
+      },
+      "speed": {
+        "kind": "km_per_unit",
+        "value": 200,
+        "unit": "hour"
+      },
+      "plant": "semaphore-towers",
+      "technology": {
+        "months": 0,
+        "cost": 20000
+      },
+      "capacity": {
+        "kind": "bps",
+        "value": 0.5
+      },
+      "circuits": 1,
+      "source": "game-model",
+      "fieldSources": {
+        "speed": "src-hist-optical-telegraph"
+      }
+    },
+    {
+      "id": "electric-telegraph",
+      "name": "Electric telegraph",
+      "era": 2,
+      "class": "text",
+      "summary": "A skilled operator keys coded text down a wire; it arrives at once.",
+      "reach": {
+        "kind": "unlimited"
+      },
+      "speed": {
+        "kind": "instant"
+      },
+      "plant": "copper-plant",
+      "technology": {
+        "months": 0,
+        "cost": 20000
+      },
+      "capacity": {
+        "kind": "bps",
+        "value": 15
+      },
+      "circuits": 1,
+      "source": "game-model",
+      "fieldSources": {
+        "speed": "src-hist-electric-telegraph"
+      }
+    },
+    {
+      "id": "telephone-line",
+      "name": "Telephone line",
+      "era": 2,
+      "class": "live-voice",
+      "summary": "One live conversation over a copper pair.",
+      "reach": {
+        "kind": "unlimited"
+      },
+      "speed": {
+        "kind": "instant"
+      },
+      "plant": "copper-plant",
+      "technology": {
+        "months": 12,
+        "cost": 100000
+      },
+      "capacity": {
+        "kind": "bps",
+        "value": 64000
+      },
+      "circuits": 1,
+      "source": "game-model",
+      "fieldSources": {
+        "speed": "src-hist-telephone",
+        "capacity": "src-ds0"
+      }
+    },
+    {
+      "id": "analog-carrier",
+      "name": "Analog carrier trunk",
+      "era": 2,
+      "class": "live-voice",
+      "summary": "Twelve voice channels multiplexed onto one copper route.",
+      "reach": {
+        "kind": "unlimited"
+      },
+      "speed": {
+        "kind": "instant"
+      },
+      "plant": "copper-plant",
+      "technology": {
+        "months": 6,
+        "cost": 150000
+      },
+      "capacity": {
+        "kind": "bps",
+        "value": 768000
+      },
+      "circuits": 12,
+      "source": "game-model",
+      "fieldSources": {}
+    },
+    {
+      "id": "t1",
+      "name": "T1 (DS1)",
+      "era": 2,
+      "class": "data",
+      "summary": "24 digital channels over copper.",
+      "reach": {
+        "kind": "unlimited"
+      },
+      "speed": {
+        "kind": "propagation",
+        "kmPerS": 200000
+      },
+      "plant": "copper-plant",
+      "technology": {
+        "months": 3,
+        "cost": 200000
+      },
+      "capacity": {
+        "kind": "bps",
+        "value": 1544000
+      },
+      "circuits": 24,
+      "source": "game-model",
+      "fieldSources": {
+        "capacity": "src-ds1",
+        "circuits": "src-ds1"
+      }
+    },
+    {
+      "id": "t3",
+      "name": "T3 (DS3)",
+      "era": 2,
+      "class": "data",
+      "summary": "28 T1s multiplexed onto fiber.",
+      "reach": {
+        "kind": "unlimited"
+      },
+      "speed": {
+        "kind": "propagation",
+        "kmPerS": 200000
+      },
+      "plant": "fiber-cable",
+      "technology": {
+        "months": 3,
+        "cost": 200000
+      },
+      "capacity": {
+        "kind": "bps",
+        "value": 44736000
+      },
+      "circuits": 672,
+      "source": "game-model",
+      "fieldSources": {
+        "capacity": "src-ds3",
+        "circuits": "src-ds3",
+        "speed": "src-fiber-speed"
+      }
+    },
+    {
+      "id": "oc-3",
+      "name": "SONET OC-3",
+      "era": 2,
+      "class": "data",
+      "summary": "Optical carrier at 155.52 Mbps.",
+      "reach": {
+        "kind": "unlimited"
+      },
+      "speed": {
+        "kind": "propagation",
+        "kmPerS": 200000
+      },
+      "plant": "fiber-cable",
+      "technology": {
+        "months": 3,
+        "cost": 300000
+      },
+      "capacity": {
+        "kind": "bps",
+        "value": 155520000
+      },
+      "circuits": 2016,
+      "source": "game-model",
+      "fieldSources": {
+        "capacity": "src-sonet",
+        "speed": "src-fiber-speed"
+      }
+    },
+    {
+      "id": "oc-12",
+      "name": "SONET OC-12",
+      "era": 2,
+      "class": "data",
+      "summary": "Optical carrier at 622.08 Mbps.",
+      "reach": {
+        "kind": "unlimited"
+      },
+      "speed": {
+        "kind": "propagation",
+        "kmPerS": 200000
+      },
+      "plant": "fiber-cable",
+      "technology": {
+        "months": 3,
+        "cost": 450000
+      },
+      "capacity": {
+        "kind": "bps",
+        "value": 622080000
+      },
+      "circuits": 8064,
+      "source": "game-model",
+      "fieldSources": {
+        "capacity": "src-sonet",
+        "speed": "src-fiber-speed"
+      }
+    },
+    {
+      "id": "oc-48",
+      "name": "SONET OC-48",
+      "era": 2,
+      "class": "data",
+      "summary": "Optical carrier at 2,488.32 Mbps.",
+      "reach": {
+        "kind": "unlimited"
+      },
+      "speed": {
+        "kind": "propagation",
+        "kmPerS": 200000
+      },
+      "plant": "fiber-cable",
+      "technology": {
+        "months": 3,
+        "cost": 650000
+      },
+      "capacity": {
+        "kind": "bps",
+        "value": 2488320000
+      },
+      "circuits": 32256,
+      "source": "game-model",
+      "fieldSources": {
+        "capacity": "src-sonet",
+        "speed": "src-fiber-speed"
+      }
+    },
+    {
+      "id": "ethernet-fiber",
+      "name": "Ethernet over fiber / cable",
+      "era": 3,
+      "class": "data",
+      "summary": "Fiber to every home; the upgrade path from SONET on fiber already in the ground.",
+      "reach": {
+        "kind": "route"
+      },
+      "speed": {
+        "kind": "propagation",
+        "kmPerS": 200000
+      },
+      "plant": "fiber-cable",
+      "technology": {
+        "months": 3,
+        "perPerson": 50
+      },
+      "capacity": {
+        "kind": "user_mbps",
+        "value": 1000
+      },
+      "serviceArea": {
+        "kind": "fiber",
+        "maxUserMbps": 1000,
+        "mobile": false
+      },
+      "source": "game-model",
+      "fieldSources": {
+        "speed": "src-fiber-speed"
+      }
+    },
+    {
+      "id": "cellular-2g",
+      "name": "Digital cellular (2G)",
+      "era": 3,
+      "class": "data",
+      "summary": "Wide coverage per tower, very little capacity.",
+      "reach": {
+        "kind": "coverage"
+      },
+      "speed": {
+        "kind": "propagation",
+        "kmPerS": 300000
+      },
+      "plant": "tower-sites",
+      "technology": {
+        "months": 6,
+        "perTower": 20000
+      },
+      "capacity": {
+        "kind": "user_mbps",
+        "value": 0.2
+      },
+      "serviceArea": {
+        "kind": "wireless",
+        "coverageKm2": 1000,
+        "capacityMbps": 1,
+        "peakUserMbps": 0.2,
+        "mobile": true,
+        "requiresFlat": true
+      },
+      "source": "game-model",
+      "fieldSources": {}
+    },
+    {
+      "id": "broadband-3g",
+      "name": "Mobile broadband (3G)",
+      "era": 3,
+      "class": "data",
+      "summary": "Broadband to phones, still modest per user.",
+      "reach": {
+        "kind": "coverage"
+      },
+      "speed": {
+        "kind": "propagation",
+        "kmPerS": 300000
+      },
+      "plant": "tower-sites",
+      "technology": {
+        "months": 6,
+        "perTower": 40000
+      },
+      "capacity": {
+        "kind": "user_mbps",
+        "value": 10
+      },
+      "serviceArea": {
+        "kind": "wireless",
+        "coverageKm2": 800,
+        "capacityMbps": 20,
+        "peakUserMbps": 10,
+        "mobile": true,
+        "requiresFlat": true
+      },
+      "source": "game-model",
+      "fieldSources": {}
+    },
+    {
+      "id": "lte-4g",
+      "name": "LTE broadband (4G)",
+      "era": 3,
+      "class": "data",
+      "summary": "Fast mobile data with medium coverage per tower.",
+      "reach": {
+        "kind": "coverage"
+      },
+      "speed": {
+        "kind": "propagation",
+        "kmPerS": 300000
+      },
+      "plant": "tower-sites",
+      "technology": {
+        "months": 6,
+        "perTower": 70000
+      },
+      "capacity": {
+        "kind": "user_mbps",
+        "value": 100
+      },
+      "serviceArea": {
+        "kind": "wireless",
+        "coverageKm2": 600,
+        "capacityMbps": 300,
+        "peakUserMbps": 100,
+        "mobile": true,
+        "requiresFlat": true
+      },
+      "source": "game-model",
+      "fieldSources": {}
+    },
+    {
+      "id": "midband-5g",
+      "name": "Mid-band 5G",
+      "era": 3,
+      "class": "data",
+      "summary": "Very high capacity, but small coverage per tower.",
+      "reach": {
+        "kind": "coverage"
+      },
+      "speed": {
+        "kind": "propagation",
+        "kmPerS": 300000
+      },
+      "plant": "tower-sites",
+      "technology": {
+        "months": 6,
+        "perTower": 170000
+      },
+      "capacity": {
+        "kind": "user_mbps",
+        "value": 500
+      },
+      "serviceArea": {
+        "kind": "wireless",
+        "coverageKm2": 150,
+        "capacityMbps": 3000,
+        "peakUserMbps": 500,
+        "mobile": true,
+        "requiresFlat": true
+      },
+      "source": "game-model",
+      "fieldSources": {}
+    },
+    {
+      "id": "fixed-wireless",
+      "name": "Interference-cancelling beamformed fixed wireless",
+      "era": 3,
+      "class": "data",
+      "summary": "Near-gigabit to fixed homes over long distances; no mobile users.",
+      "reach": {
+        "kind": "coverage"
+      },
+      "speed": {
+        "kind": "propagation",
+        "kmPerS": 300000
+      },
+      "plant": "tower-sites",
+      "technology": {
+        "months": 6,
+        "perTower": 120000
+      },
+      "capacity": {
+        "kind": "user_mbps",
+        "value": 800
+      },
+      "serviceArea": {
+        "kind": "wireless",
+        "coverageKm2": 700,
+        "capacityMbps": 4000,
+        "peakUserMbps": 800,
+        "mobile": false,
+        "requiresFlat": true
+      },
+      "source": "game-model",
+      "fieldSources": {}
+    },
+    {
+      "id": "leo-satellite",
+      "name": "Low-earth-orbit (LEO) satellite",
+      "era": 3,
+      "class": "data",
+      "summary": "A constellation about 550 km up: short path, covers sparse areas.",
+      "reach": {
+        "kind": "coverage"
+      },
+      "speed": {
+        "kind": "satellite_path",
+        "pathKm": 1100
+      },
+      "plant": null,
+      "technology": {
+        "months": 36,
+        "fixed": 1000000,
+        "perPerson": 2000
+      },
+      "capacity": {
+        "kind": "user_mbps",
+        "value": 100
+      },
+      "serviceArea": {
+        "kind": "satellite",
+        "maxUserMbps": 100,
+        "densityCap": 50,
+        "mobile": true
+      },
+      "source": "game-model",
+      "fieldSources": {
+        "speed": "src-speed-of-light"
+      }
+    },
+    {
+      "id": "geo-satellite",
+      "name": "Geostationary satellite",
+      "era": 3,
+      "class": "data",
+      "summary": "One satellite 35,786 km up covers a continent, but every message travels about 71,572 km.",
+      "reach": {
+        "kind": "coverage"
+      },
+      "speed": {
+        "kind": "satellite_path",
+        "pathKm": 71572
+      },
+      "plant": null,
+      "technology": {
+        "months": 120,
+        "fixed": 1500000,
+        "perPerson": 5000
+      },
+      "capacity": {
+        "kind": "user_mbps",
+        "value": 25
+      },
+      "serviceArea": {
+        "kind": "satellite",
+        "maxUserMbps": 25,
+        "densityCap": 50,
+        "mobile": true
+      },
+      "source": "game-model",
+      "fieldSources": {
+        "speed": "src-geo-altitude"
+      }
+    }
+  ],
+  "levels": [
+    {
+      "id": "level-1",
+      "title": "Voices and Couriers",
+      "eraName": "Era of signals",
+      "learningOutcome": "LO1",
+      "briefing": {
+        "intro": [
+          "You are the Messenger-General of a young civilization. You never build or move its settlements: they grow on their own, and your job is to keep their messages moving.",
+          "People first talked face to face, then learned to write. Speech carries live voice only as far as someone can hear; writing can travel, but only as fast as whoever carries it."
+        ],
+        "concept": [
+          "Every link has a message class: alert < text < live voice < data. A medium can carry its own class and anything lower, so a written message can also carry an alert, but a beacon cannot carry a written message.",
+          "Every link has a reach: how far one link spans. There are no relay chains in this game; one link must cover the whole distance."
+        ],
+        "example": "Worked example (not one of your rounds): a shepherd 4 km from the village must warn of wolves within 15 minutes. A signal drum carries an alert, reaches 5 km and is heard at once, so it works and costs 2. A smoke beacon also works but costs 3. A foot courier carries text, which covers an alert, but at 40 km/day it needs 2.4 hours.",
+        "note": "Figures in this game are simplified game-model values, not historical measurements, unless a source is cited."
+      },
+      "sourceIds": [
+        "src-hist-courier"
+      ],
+      "unlockedMediumIds": [
+        "spoken-word",
+        "signal-drum",
+        "smoke-beacon",
+        "foot-courier",
+        "horse-relay"
+      ],
+      "rounds": [
+        {
+          "id": "l1-r1",
+          "growth": {
+            "yearLabel": "Year 900",
+            "settlements": [
+              {
+                "id": "ashford",
+                "name": "Ashford",
+                "tier": "village",
+                "x": 66.59,
+                "y": 28.66,
+                "reason": "Ashford has grown into a village worth raiding."
+              },
+              {
+                "id": "hill-fort",
+                "name": "Hill Fort",
+                "tier": "hamlet",
+                "x": 33.28,
+                "y": 41.27,
+                "reason": "Lookouts at the Hill Fort can see raiders coming."
+              }
+            ],
+            "map": {
+              "image": "assets/maps/l1-r1.webp",
+              "widthKm": 64.0,
+              "places": {
+                "ashford": {
+                  "x": 66.59,
+                  "y": 28.66
+                },
+                "hill-fort": {
+                  "x": 33.28,
+                  "y": 41.27
+                },
+                "brennans-ford": {
+                  "x": -150.53,
+                  "y": 219.52
+                },
+                "kingsport": {
+                  "x": 115.74,
+                  "y": 229.66
+                },
+                "port-merrow": {
+                  "x": 587.55,
+                  "y": 76.86
+                },
+                "merrow-harbour": {
+                  "x": 604.61,
+                  "y": 80.44
+                },
+                "great-steppe": {
+                  "x": 365.9,
+                  "y": -198.59
+                }
+              }
+            }
+          },
+          "request": {
+            "from": "Hill Fort",
+            "to": "Ashford",
+            "distanceKm": 25,
+            "class": "alert",
+            "deadline": {
+              "value": 1,
+              "unit": "hour"
+            },
+            "leadMonths": 12,
+            "circuits": 1,
+            "story": "Raiders are approaching. The lookouts must warn Ashford within 1 hour, and the village has 12 months before raids become a regular threat."
+          },
+          "existingInfrastructure": {
+            "assets": [],
+            "existingTowerSites": 0
+          },
+          "hints": [
+            "Work through the method in order. 1) Class: can the medium carry an alert? 2) Reach: does one link span 25 km? 3) Delivery time: distance ÷ speed, against the 1-hour deadline. 4) Capacity: does it carry the 1 circuit needed? 5) Build time and cost: is it ready within 12 months, and which feasible medium costs least?",
+            "Worked step, class and reach: every Level 1 medium can carry an alert, but the spoken word reaches only 0.1 km and the signal drum only 5 km, so neither spans 25 km. The smoke beacon, the foot courier and the horse relay go on to the delivery-time check."
+          ],
+          "sourceIds": []
+        },
+        {
+          "id": "l1-r2",
+          "growth": {
+            "yearLabel": "Year 1150",
+            "settlements": [
+              {
+                "id": "ashford",
+                "name": "Ashford",
+                "tier": "town",
+                "x": 78.0,
+                "y": 10.47,
+                "reason": "Ashford has become a market town with merchants who trade by letter."
+              },
+              {
+                "id": "brennans-ford",
+                "name": "Brennan's Ford",
+                "tier": "village",
+                "x": 22.03,
+                "y": 59.33,
+                "reason": "Brennan's Ford, 200 km downriver, now buys Ashford's grain."
+              }
+            ],
+            "map": {
+              "image": "assets/maps/l1-r2.webp",
+              "widthKm": 250.0,
+              "places": {
+                "ashford": {
+                  "x": 78.0,
+                  "y": 10.47
+                },
+                "hill-fort": {
+                  "x": 69.41,
+                  "y": 13.69
+                },
+                "brennans-ford": {
+                  "x": 22.03,
+                  "y": 59.33
+                },
+                "kingsport": {
+                  "x": 90.67,
+                  "y": 61.92
+                },
+                "port-merrow": {
+                  "x": 212.3,
+                  "y": 22.81
+                },
+                "merrow-harbour": {
+                  "x": 216.69,
+                  "y": 23.72
+                },
+                "great-steppe": {
+                  "x": 155.16,
+                  "y": -47.71
+                }
+              }
+            }
+          },
+          "request": {
+            "from": "Ashford",
+            "to": "Brennan's Ford",
+            "distanceKm": 200,
+            "class": "text",
+            "deadline": {
+              "value": 24,
+              "unit": "hour"
+            },
+            "leadMonths": 12,
+            "circuits": 1,
+            "story": "Ashford's merchants must send written orders to Brennan's Ford, 200 km away, and each order must arrive within 24 hours. The grain trade starts in 12 months."
+          },
+          "existingInfrastructure": {
+            "assets": [],
+            "existingTowerSites": 0
+          },
+          "hints": [
+            "Work through the method in order. 1) Class: a written order is text. 2) Reach: one link must span 200 km. 3) Delivery time: distance ÷ speed, against 24 hours. 4) Capacity: 1 circuit. 5) Build time and cost: ready within 12 months, then the cheapest.",
+            "Worked step, class and reach: the signal drum and smoke beacon carry only alerts, so they cannot carry a written order, and the spoken word reaches 0.1 km. That leaves the two couriers. Now divide 200 km by each courier's speed and compare with 24 hours."
+          ],
+          "sourceIds": [
+            "src-hist-courier"
+          ]
+        }
+      ],
+      "budget": 200000
+    },
+    {
+      "id": "level-2",
+      "title": "Wires",
+      "eraName": "Era of wires",
+      "learningOutcome": "LO2",
+      "briefing": {
+        "intro": [
+          "The age of wires has arrived. Messages can travel down copper and later glass, and you choose between the newest technology and what is already in the ground."
+        ],
+        "concept": [
+          "Delivery time is distance ÷ speed. A fast medium is not an instant one: a semaphore message at 200 km/h still needs time to cross a long route, while a wire carries a signal at once.",
+          "A live conversation is one circuit. A link must carry at least the number of simultaneous circuits a request needs.",
+          "Building a link has two parts: the physical plant (copper, ducts, fiber) is slow to build; the technology on it is quick. Plant already in the ground costs nothing and takes no time. A higher-rate technology on the same plant costs more but takes no longer."
+        ],
+        "example": "Worked example (not one of your rounds): a text message must cross 60 km within 15 minutes. The optical telegraph moves at 200 km/h, so it needs 18 minutes and is too slow; the electric telegraph arrives at once. And if copper is already in the ground, a T1 pays only for its equipment: 20 instead of 35, ready in 3 months instead of 39.",
+        "note": "Figures in this game are simplified game-model values unless a source is cited. Standard rates such as 64 kbps per voice channel and the T1, T3 and SONET line rates are real values."
+      },
+      "sourceIds": [
+        "src-hist-optical-telegraph",
+        "src-hist-electric-telegraph",
+        "src-hist-telephone",
+        "src-ds0",
+        "src-ds1",
+        "src-ds3",
+        "src-sonet",
+        "src-fiber-speed"
+      ],
+      "unlockedMediumIds": [
+        "optical-telegraph",
+        "electric-telegraph",
+        "telephone-line",
+        "analog-carrier",
+        "t1",
+        "t3",
+        "oc-3",
+        "oc-12",
+        "oc-48"
+      ],
+      "rounds": [
+        {
+          "id": "l2-r1",
+          "growth": {
+            "yearLabel": "Year 1795",
+            "settlements": [
+              {
+                "id": "ashford",
+                "name": "Ashford",
+                "tier": "city",
+                "x": 70.03,
+                "y": 11.05,
+                "reason": "Ashford is now a city and the seat of a shipping company."
+              },
+              {
+                "id": "kingsport",
+                "name": "Kingsport",
+                "tier": "town",
+                "x": 81.77,
+                "y": 58.7,
+                "reason": "Kingsport, 150 km away, has grown into a busy port town."
+              },
+              {
+                "id": "brennans-ford",
+                "name": "Brennan's Ford",
+                "tier": "town",
+                "x": 18.19,
+                "y": 56.3,
+                "reason": "Brennan's Ford is now a town."
+              }
+            ],
+            "map": {
+              "image": "assets/maps/l2-r1.webp",
+              "widthKm": 270.0,
+              "places": {
+                "ashford": {
+                  "x": 70.03,
+                  "y": 11.05
+                },
+                "hill-fort": {
+                  "x": 62.08,
+                  "y": 14.04
+                },
+                "brennans-ford": {
+                  "x": 18.19,
+                  "y": 56.3
+                },
+                "kingsport": {
+                  "x": 81.77,
+                  "y": 58.7
+                },
+                "port-merrow": {
+                  "x": 194.43,
+                  "y": 22.48
+                },
+                "merrow-harbour": {
+                  "x": 198.5,
+                  "y": 23.33
+                },
+                "great-steppe": {
+                  "x": 141.5,
+                  "y": -42.81
+                }
+              }
+            }
+          },
+          "request": {
+            "from": "Ashford",
+            "to": "Kingsport",
+            "distanceKm": 150,
+            "class": "text",
+            "deadline": {
+              "value": 30,
+              "unit": "minute"
+            },
+            "leadMonths": 40,
+            "circuits": 1,
+            "story": "Ships leave Kingsport on the tide. Written sailing orders from Ashford must arrive within 30 minutes, and the new trade route opens in 40 months."
+          },
+          "existingInfrastructure": {
+            "assets": [],
+            "existingTowerSites": 0
+          },
+          "hints": [
+            "Work through the method in order. 1) Class: sailing orders are text. 2) Reach: one link must span 150 km. 3) Delivery time: distance ÷ speed, against 30 minutes. 4) Capacity: 1 circuit. 5) Build time and cost: ready within 40 months, then the cheapest.",
+            "Worked step, delivery time: the optical telegraph covers 150 km at 200 km/h, so it needs 45 minutes against a 30-minute deadline. The electric telegraph, the telephone and the wired carriers arrive at once, so for them the build time against 40 months decides what is left."
+          ],
+          "sourceIds": [
+            "src-hist-optical-telegraph",
+            "src-hist-electric-telegraph",
+            "src-hist-telephone"
+          ]
+        },
+        {
+          "id": "l2-r2",
+          "growth": {
+            "yearLabel": "Year 1890",
+            "settlements": [
+              {
+                "id": "ashford",
+                "name": "Ashford",
+                "tier": "city",
+                "x": 10.33,
+                "y": 19.75,
+                "reason": "Ashford's exchange connects thousands of telephones."
+              },
+              {
+                "id": "kingsport",
+                "name": "Kingsport",
+                "tier": "city",
+                "x": 17.81,
+                "y": 50.09,
+                "reason": "Kingsport is now a city."
+              },
+              {
+                "id": "port-merrow",
+                "name": "Port Merrow",
+                "tier": "city",
+                "x": 89.55,
+                "y": 27.03,
+                "reason": "Port Merrow, 300 km away, is a city whose merchants call Ashford all day."
+              }
+            ],
+            "map": {
+              "image": "assets/maps/l2-r2.webp",
+              "widthKm": 424.0,
+              "places": {
+                "ashford": {
+                  "x": 10.33,
+                  "y": 19.75
+                },
+                "hill-fort": {
+                  "x": 5.27,
+                  "y": 21.66
+                },
+                "brennans-ford": {
+                  "x": -22.68,
+                  "y": 48.56
+                },
+                "kingsport": {
+                  "x": 17.81,
+                  "y": 50.09
+                },
+                "port-merrow": {
+                  "x": 89.55,
+                  "y": 27.03
+                },
+                "merrow-harbour": {
+                  "x": 92.15,
+                  "y": 27.57
+                },
+                "great-steppe": {
+                  "x": 55.85,
+                  "y": -14.55
+                }
+              }
+            }
+          },
+          "request": {
+            "from": "Ashford",
+            "to": "Port Merrow",
+            "distanceKm": 300,
+            "class": "live-voice",
+            "deadline": {
+              "value": 1,
+              "unit": "second"
+            },
+            "leadMonths": 60,
+            "circuits": 20,
+            "story": "The two cities' exchanges need 20 simultaneous live calls between them, each heard within 1 second. Copper telephone plant already runs along the route. Demand peaks in 60 months."
+          },
+          "existingInfrastructure": {
+            "assets": [
+              "copper-plant"
+            ],
+            "existingTowerSites": 0
+          },
+          "hints": [
+            "Work through the method in order. 1) Class: live voice, or a higher class. 2) Reach: one link must span 300 km. 3) Delivery time: within 1 second. 4) Capacity: 20 circuits. 5) Build time and cost: ready within 60 months; copper already in the ground costs nothing.",
+            "Worked step, capacity: 20 simultaneous calls need 20 circuits. The telephone line carries 1 and the analog carrier 12, so both fail even though copper is already in the ground. Compare the costs of the media that carry 20 or more."
+          ],
+          "sourceIds": [
+            "src-ds0",
+            "src-ds1",
+            "src-ds3",
+            "src-sonet"
+          ]
+        }
+      ],
+      "budget": 700000
+    },
+    {
+      "id": "level-3",
+      "title": "Networks",
+      "eraName": "Era of networks",
+      "learningOutcome": "LO3",
+      "briefing": {
+        "intro": [
+          "Your civilization now asks for broadband for whole regions, not one link between two places. Each request describes a service area: how many people, over how many km², how far from the backbone, how fast each person needs to go, and whether they move around."
+        ],
+        "concept": [
+          "Peak demand = population × per-user speed × 10%: about one in ten users is busy at once.",
+          "Each wireless generation trades coverage for capacity. A tower serves only so many km² and so many Mbps, so towers = the larger of area ÷ coverage and peak demand ÷ capacity. Every wireless tier needs flat terrain, and fixed wireless cannot serve people who move.",
+          "Satellites ignore distance on the ground but not the sky: a geostationary message always travels about 71,572 km up and down, about 239 ms, so it can never meet a tighter deadline. Low-orbit satellites are only about 1,100 km up and down. Satellites cannot serve more than 50 people per km².",
+          "Fiber costs per route km plus equipment per person. Fiber already in the ground costs nothing to reuse, and on a lit SONET route the equipment costs half: that is the SONET-to-Ethernet upgrade.",
+          "In this era you choose only among network technologies. Older media still appear in the table for comparison."
+        ],
+        "example": "Worked example (not one of your rounds): a flat valley of 1,000 km² with 2,000 people needing 10 Mbps each has peak demand 2,000 × 10 × 10% = 2,000 Mbps. 4G needs the larger of 1,000 ÷ 600 → 2 towers and 2,000 ÷ 300 → 7 towers, so 7 towers at 15 each: 105. Fixed wireless needs 2 towers at 20 each: 40. LEO costs 100 + 0.2 × 2,000 = 500.",
+        "note": "Figures in this game are simplified game-model values unless a source is cited. The geostationary altitude and the speed of light are real values."
+      },
+      "sourceIds": [
+        "src-fiber-speed",
+        "src-geo-altitude",
+        "src-speed-of-light"
+      ],
+      "unlockedMediumIds": [
+        "ethernet-fiber",
+        "cellular-2g",
+        "broadband-3g",
+        "lte-4g",
+        "midband-5g",
+        "fixed-wireless",
+        "leo-satellite",
+        "geo-satellite"
+      ],
+      "rounds": [
+        {
+          "id": "l3-r1",
+          "growth": {
+            "yearLabel": "Year 2015",
+            "settlements": [
+              {
+                "id": "ashford",
+                "name": "Ashford",
+                "tier": "metropolis",
+                "x": 14.69,
+                "y": 65.18,
+                "reason": "Ashford is a metropolis and the region's backbone hub."
+              },
+              {
+                "id": "great-steppe",
+                "name": "Great Steppe",
+                "tier": "hamlet",
+                "x": 58.81,
+                "y": 31.12,
+                "reason": "Herding families spread across the flat steppe want video calls with the city."
+              }
+            ],
+            "map": {
+              "image": "assets/maps/l3-r1.webp",
+              "widthKm": 427.0,
+              "area": {
+                "x": 58.81,
+                "y": 31.12,
+                "rx": 26.43,
+                "ry": 26.43
+              },
+              "places": {
+                "ashford": {
+                  "x": 14.69,
+                  "y": 65.18
+                },
+                "hill-fort": {
+                  "x": 9.78,
+                  "y": 67.07
+                },
+                "brennans-ford": {
+                  "x": -17.32,
+                  "y": 93.78
+                },
+                "kingsport": {
+                  "x": 21.93,
+                  "y": 95.3
+                },
+                "port-merrow": {
+                  "x": 91.48,
+                  "y": 72.4
+                },
+                "merrow-harbour": {
+                  "x": 93.99,
+                  "y": 72.94
+                },
+                "great-steppe": {
+                  "x": 58.81,
+                  "y": 31.12
+                }
+              }
+            }
+          },
+          "request": {
+            "from": "Ashford",
+            "to": "Great Steppe",
+            "class": "data",
+            "routeKm": 400,
+            "areaKm2": 40000,
+            "population": 1500,
+            "perUserMbps": 5,
+            "mobile": true,
+            "flat": true,
+            "deadline": {
+              "value": 150,
+              "unit": "ms"
+            },
+            "leadMonths": 48,
+            "story": "1,500 herders move with their animals across 40,000 km² of flat steppe, 400 km from Ashford's backbone. Each needs 5 Mbps while on the move, and live video calls need the signal to arrive within 150 ms. Service must start within 48 months."
+          },
+          "existingInfrastructure": {
+            "assets": [],
+            "existingTowerSites": 0
+          },
+          "hints": [
+            "Work through the method in order. 1) Class: every network medium carries data. 2) Coverage: flat terrain, moving users, and at most 50 people per km² for satellites. 3) Delivery time: the 150 ms deadline (satellites use only their up-and-down path). 4) Capacity: 5 Mbps per user. 5) Build time and cost: ready within 48 months, then the cheapest.",
+            "Worked step, coverage and delivery time: the herders move, so fiber and fixed wireless are out. The geostationary path takes about 239 ms, more than 150 ms, so it is late. 2G gives each user only 0.2 Mbps. Compare the costs of 3G, 4G, 5G and the low-orbit satellite."
+          ],
+          "sourceIds": [
+            "src-geo-altitude",
+            "src-speed-of-light"
+          ]
+        },
+        {
+          "id": "l3-r2",
+          "growth": {
+            "yearLabel": "Year 2024",
+            "settlements": [
+              {
+                "id": "merrow-harbour",
+                "name": "Merrow Harbour",
+                "tier": "town",
+                "x": 66.08,
+                "y": 38.25,
+                "reason": "The undersea and backbone cables land at Merrow Harbour."
+              },
+              {
+                "id": "port-merrow",
+                "name": "Port Merrow",
+                "tier": "metropolis",
+                "x": 33.86,
+                "y": 31.52,
+                "reason": "Port Merrow has become a dense metropolis of 200,000 people in 50 km²."
+              },
+              {
+                "id": "great-steppe",
+                "name": "Great Steppe",
+                "tier": "village",
+                "x": -384.79,
+                "y": -486.97,
+                "reason": "The steppe camps have grown into a village."
+              }
+            ],
+            "map": {
+              "image": "assets/maps/l3-r2.webp",
+              "widthKm": 34.0,
+              "area": {
+                "x": 33.86,
+                "y": 31.52,
+                "rx": 11.73,
+                "ry": 11.73
+              },
+              "places": {
+                "ashford": {
+                  "x": -950.13,
+                  "y": -59.22
+                },
+                "hill-fort": {
+                  "x": -1013.03,
+                  "y": -35.47
+                },
+                "brennans-ford": {
+                  "x": -1360.22,
+                  "y": 300.05
+                },
+                "kingsport": {
+                  "x": -857.3,
+                  "y": 319.14
+                },
+                "port-merrow": {
+                  "x": 33.86,
+                  "y": 31.52
+                },
+                "merrow-harbour": {
+                  "x": 66.08,
+                  "y": 38.25
+                },
+                "great-steppe": {
+                  "x": -384.79,
+                  "y": -486.97
+                }
+              }
+            }
+          },
+          "request": {
+            "from": "Merrow Harbour",
+            "to": "Port Merrow",
+            "class": "data",
+            "routeKm": 10,
+            "areaKm2": 50,
+            "population": 200000,
+            "perUserMbps": 100,
+            "mobile": false,
+            "flat": true,
+            "leadMonths": 18,
+            "story": "200,000 people in 50 km² of Port Merrow each need 100 Mbps at home, 10 km from the backbone at Merrow Harbour. A SONET fiber route is already lit along the way. Demand arrives in 18 months; there is no delivery deadline for this request."
+          },
+          "existingInfrastructure": {
+            "assets": [
+              "lit-sonet-fiber"
+            ],
+            "existingTowerSites": 0
+          },
+          "hints": [
+            "Work through the method in order. 1) Class: data. 2) Coverage: fixed homes on flat ground; check the satellite density cap (200,000 ÷ 50 km²). 3) Delivery time: no deadline here. 4) Capacity: 100 Mbps per user. 5) Build time and cost: ready within 18 months; fiber already in the ground costs nothing.",
+            "Worked step, coverage and build time: Port Merrow has 4,000 people per km², far above the satellites' cap of 50. Every wireless tier needs new tower sites, which take 18 months plus 6 months of radio work: 24 months, more than 18. Now look at what the lit SONET fiber route already gives you."
+          ],
+          "sourceIds": [
+            "src-fiber-speed"
+          ]
+        }
+      ],
+      "budget": 16000000
+    }
+  ],
+  "epilogue": {
+    "yearLabel": "Year 2040",
+    "settlements": [
+      {
+        "id": "merrow-harbour",
+        "name": "Merrow Harbour",
+        "tier": "city",
+        "x": 68.93,
+        "y": 57.53,
+        "reason": "Merrow Harbour is now a city."
+      },
+      {
+        "id": "port-merrow",
+        "name": "Port Merrow",
+        "tier": "metropolis",
+        "x": 66.22,
+        "y": 56.96,
+        "reason": "Port Merrow keeps growing."
+      },
+      {
+        "id": "great-steppe",
+        "name": "Great Steppe",
+        "tier": "town",
+        "x": 31.03,
+        "y": 12.88,
+        "reason": "The steppe village is now a town."
+      }
+    ],
+    "map": {
+      "image": "assets/maps/epilogue.webp",
+      "widthKm": 400.0,
+      "places": {
+        "ashford": {
+          "x": -16.5,
+          "y": 49.25
+        },
+        "hill-fort": {
+          "x": -21.79,
+          "y": 51.26
+        },
+        "brennans-ford": {
+          "x": -50.98,
+          "y": 79.78
+        },
+        "kingsport": {
+          "x": -8.7,
+          "y": 81.41
+        },
+        "port-merrow": {
+          "x": 66.22,
+          "y": 56.96
+        },
+        "merrow-harbour": {
+          "x": 68.93,
+          "y": 57.53
+        },
+        "great-steppe": {
+          "x": 31.03,
+          "y": 12.88
+        }
+      }
+    }
+  }
+}

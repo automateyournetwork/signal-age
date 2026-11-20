@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:," />
+    <title>Signal Age tests</title>
+    <style>
+      body { font: 16px/1.5 system-ui, sans-serif; margin: 0 auto; max-width: 60rem; padding: 1rem; color: #1d1d1b; background: #fbfaf7; }
+      h1 { font-size: 1.5rem; }
+      .status { font-size: 1.25rem; font-weight: 700; padding: 0.5rem 0.75rem; border-radius: 0.25rem; display: inline-block; }
+      .status.pass { background: #dff3e4; color: #0d5a26; }
+      .status.fail { background: #fbe3e1; color: #8a1c12; }
+      .status.running { background: #eee; }
+      table { border-collapse: collapse; width: 100%; margin-top: 1rem; font-size: 0.9rem; }
+      th, td { border: 1px solid #ccc; padding: 0.25rem 0.5rem; text-align: left; vertical-align: top; }
+      td.ok { color: #0d5a26; }
+      td.bad { color: #8a1c12; font-weight: 700; }
+      code { font-size: 0.85rem; }
+    </style>
+  </head>
+  <body data-status="running">
+    <main>
+      <h1>Signal Age test runner</h1>
+      <p>Runs every suite listed below in this browser. A run with <strong>zero tests is a failure</strong>.
+        Add <code>?suites=harness,rules</code> to run a subset, or <code>?suites=</code> to see the zero-test failure.</p>
+      <p id="status" class="status running" role="status" aria-live="polite">Running…</p>
+      <p id="totals"></p>
+      <h2>Failed cases</h2>
+      <ul id="failed"><li>None yet.</li></ul>
+      <h2>All results</h2>
+      <table>
+        <thead><tr><th scope="col">Suite</th><th scope="col">Case</th><th scope="col">Result</th></tr></thead>
+        <tbody id="results"></tbody>
+      </table>
+    </main>
+    <script type="module">
+      import { run, summarize } from './harness.js';
+
+      // Explicit suite list: a static page cannot list a directory.
+      const ALL_SUITES = ['harness', 'rules', 'state', 'sim', 'content', 'scores'];
+      const params = new URLSearchParams(location.search);
+      const chosen = params.has('suites')
+        ? params.get('suites').split(',').map((s) => s.trim()).filter(Boolean)
+        : ALL_SUITES;
+
+      const loadFailures = [];
+      for (const name of chosen) {
+        try {
+          await import(`./${name}.test.js`);
+        } catch (error) {
+          loadFailures.push({ suite: name, name: `[LOAD] ${name}.test.js could not be loaded`, ok: false, error: String(error && error.message || error) });
+        }
+      }
+
+      const summary = await run();
+      const all = summarize([...loadFailures, ...summary.results]);
+
+      const status = document.getElementById('status');
+      status.className = `status ${all.status === 'PASS' ? 'pass' : 'fail'}`;
+      status.textContent = all.zeroTests
+        ? 'FAIL: zero tests discovered'
+        : `${all.status}: ${all.passed} passed, ${all.failed} failed, ${all.total} total`;
+      document.getElementById('totals').textContent = `Suites requested: ${chosen.length ? chosen.join(', ') : '(none)'}`;
+      document.body.dataset.status = all.status;
+      document.body.dataset.total = String(all.total);
+      document.body.dataset.failed = String(all.failed);
+      document.title = `${all.status} · Signal Age tests`;
+
+      const failed = document.getElementById('failed');
+      failed.replaceChildren(...(all.failures.length
+        ? all.failures.map((f) => {
+            const li = document.createElement('li');
+            li.textContent = `${f.suite} › ${f.name}: ${f.error}`;
+            return li;
+          })
+        : [Object.assign(document.createElement('li'), { textContent: all.zeroTests ? 'No tests ran.' : 'None.' })]));
+
+      const body = document.getElementById('results');
+      body.replaceChildren(...all.results.map((r) => {
+        const tr = document.createElement('tr');
+        for (const [text, cls] of [[r.suite, ''], [r.name, ''], [r.ok ? 'pass' : `FAIL: ${r.error}`, r.ok ? 'ok' : 'bad']]) {
+          const td = document.createElement('td');
+          td.textContent = text;
+          if (cls) td.className = cls;
+          tr.append(td);
+        }
+        return tr;
+      }));
+      window.__testSummary = { status: all.status, total: all.total, passed: all.passed, failed: all.failed,
+        failures: all.failures.map((f) => `${f.suite} › ${f.name}: ${f.error}`) };
+    </script>
+  </body>
+</html>
